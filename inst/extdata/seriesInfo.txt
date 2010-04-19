@@ -1,0 +1,2 @@
+SERIES	Series_title	Series_summary	Series_type	Series_overall_design	Series_contributor	Series_sample_id
+neuronalCultures	Gene expression from primary neuronal cultures.	Gene expression from primary neuronal cultures.	Primary cell cultures	Primary neuronal cultures (2 biological replicates).	"John,Smith; William,Ford"	1;2

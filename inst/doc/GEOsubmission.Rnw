@@ -1,0 +1,119 @@
+% \VignetteIndexEntry{GEOsubmission Overview}
+% \VignetteKeywords{Expression Analysis}
+% \VignettePackage{GEOsubmission}
+
+\documentclass[a4paper]{article}
+
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rpackage}[1]{{\textit{#1}}}
+
+\title{GEOsubmission}
+\author{Alexandre Kuhn (\textit{kuhnam@mail.nih.gov})}
+
+\usepackage{hyperref}
+\usepackage{Sweave}
+\usepackage{natbib}
+
+\begin{document}
+
+\maketitle
+
+\section{Summary}
+The goal of \Rpackage{GEOsubmission} is to ease the submission of microarray datasets to the GEO repository. It generates a single file (SOFT format) containing sample information and gene expression values. This file can then be uploaded to GEO in a single step.
+
+\section{Introduction}The rate of microarray data deposition in public repository is low \citep{ochsner2008}. \Rpackage{GEOsubmission} provides a simple and quick way to create a dataset submission for deposition at GEO (\url{http://www.ncbi.nlm.nih.gov/geo/}).
+
+\section{Principle}
+Submitting a microarray dataset to a public repository generally implies to gather information on the samples (including how they were processed) and upload this information along with the microarray data to a repository. Having both sample information and gene expression data in a single file greatly eases the submission process. GEO accepts SOFT files (\url{http://www.ncbi.nlm.nih.gov/geo/info/soft2.html}), a file format that can be used to describe samples and expression values in a single text file.
+
+\Rpackage{GEOsubmission} contains a function (\Robject{microarray2soft}) that generates a SOFT file. Sample information is gathered from user-provided text files, which are then bundled together with the corresponding expression values in the SOFT file. Microarray expression data is provided as a single tab-delimited text file (with rows corresponding to probes and columns to samples). In the case of Affymetrix microarrays, RMA-normalized expression can be calculated directly from the CEL files, i.e. without providing a separate text file for the expression values.
+
+Sample information is provided in two text files. The first one describes each sample in the dataset. The second one provides information on the dataset itself (named a "series" by GEO). \Robject{microarray2soft} performs consistency checks on sample and series information as well as makes sure that they match the corresponding micorraray raw data files. Once the SOFT file is created, it can be compressed together with the raw data microarray data in a zip file. This zip file can be used for a single-step deposition (named "direct deposit") at GEO.
+
+\section{Example usage}
+Consider an example experiment where we assayed gene expression in neuronal cultures using Affymetrix microarrays. Let us assume that this dataset (named "neuronalCultures") contains two samples (named "1" and "2"), corresponding to CEL files "sample1.CEL" and "sample2.CEL", respectively. Let us assume further that sample and series information is contained in the files named "sampleInfo.txt" and "seriesInfo.txt" respectively (in the current directory). You can use the following code to create a SOFT file named "example.soft" in the current directory:
+
+<<loadGEOsubmission>>=
+library(GEOsubmission)
+@
+
+<<sampleSerieslabels>>=
+sampleID<-c('1','2')
+seriesName<-'neuronalCultures'
+@
+
+<<exampleWcel,eval=FALSE>>=
+microarray2soft(sampleID,'sampleInfo.txt',seriesName,'seriesInfo.txt',
+softname='mydata.soft')
+
+@
+
+Note that this first example cannot be run because we only provide dummy, not valid CEL files with this package.
+
+The format and content of the sample and series files is given in the two corresponding example files provided with this package. Their content can be shown in R with the following commands (or by opening them; they are located in the "extdata" directory contained in the installation directory of \Rpackage{GEOsubmission}):
+
+<<dataDirectory>>=
+dataDirectory<-system.file('extdata',package='GEOsubmission')
+@
+<<showInfoFiles,eval=FALSE>>=
+read.delim(file.path(dataDirectory,'sampleInfo.txt'))
+read.delim(file.path(dataDirectory,'seriesInfo.txt'))
+@
+
+Alternatively, for instance in the case of a microarray experiment using a different platform than Affymetrix, we can provide the gene expression values (for inclusion in the SOFT file) in a separate text file. If this is the case, \Robject{microarray2soft} will only check that the raw microarray data files given in 'sampleInfo.txt' actually exists and will use the separate text file as the source of expression values. In our neuronal culture example, if we wished to use the expression values in the file "expressionNormalized.txt" (instead of calculating normalized expression from the microarray data files), we can use the following. We first specify a directory and a file to write the generated example SOFT file out to:
+%
+<<softFilename>>=
+soft_example_fullpath<-tempfile(pattern='soft_example')
+soft_example_name<-basename(soft_example_fullpath)
+soft_example_dir<-dirname(soft_example_fullpath)
+@
+%
+and then generate and write the SOFT file with:
+<<exampleWexpressionmatrix>>=
+microarray2soft(sampleID,'sampleInfo.txt',seriesName,'seriesInfo.txt',
+datadir=dataDirectory,writedir=soft_example_dir,
+softname=soft_example_name,expressionmatrix='expressionNormalized.txt')
+
+@
+
+The generated SOFT file looks like this:
+<<softContent>>=
+readLines(soft_example_fullpath)
+@
+
+<<deleteSoft,echo=FALSE>>=
+## Clean-up
+unlink(soft_example_fullpath)
+@
+
+The format of the file containing expression values is shown with the example file "expressionNormalized.txt" that is contained in this package. It can be output to the R console with the following command (it resides in the "extdata" directory of the package installation directory):
+
+<<showExpressionmatrix,eval=FALSE>>=
+read.delim(file.path(dataDirectory,'expressionNormalized.txt'))
+@
+
+The SOFT file can also be written to the standard output with:
+<<exampleWstdOutput,eval=FALSE>>=
+microarray2soft(c('1','2'),'sampleInfo.txt',seriesName,'seriesInfo.txt',
+datadir=dataDirectory,softname='',expressionmatrix='expressionNormalized.txt',
+verbose=FALSE)
+
+@
+
+More detailed information on the input arguments of \Robject{microarray2soft} are given in the help file that can be accessed by typing "?microarray2soft" at the R prompt.
+
+
+\section{Session Information}
+The version number of R and packages loaded for generating the vignette were:
+
+<<sessionInfo,echo=FALSE>>=
+sessionInfo()
+@
+
+
+\bibliographystyle{plainnat}
+\bibliography{GEOsubmission}
+
+
+\end{document}

@@ -1,0 +1,5 @@
+importMethodsFrom(Biobase, exprs)
+importFrom(affy, ReadAffy, rma)
+importFrom(Biobase, addVigs2WinMenu)
+importFrom(utils, read.delim, write.table)
+export(microarray2soft)
