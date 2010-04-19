@@ -7,5 +7,5 @@ Maintainer: Alexandre Kuhn <kuhnam@mail.nih.gov>
 Imports: affy, Biobase, utils
 Description: Helps to easily submit a microarray dataset and the associated sample information to GEO by preparing a single file for upload (direct deposit).
 biocViews: Microarray
-License: GPL
+License: GPL (>= 2)
 ZipData: no
