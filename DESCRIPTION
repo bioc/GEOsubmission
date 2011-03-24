@@ -2,8 +2,8 @@ Package: GEOsubmission
 Version: 1.3.0
 Date: 2010-04-19
 Title: Prepares microarray data for submission to GEO   
-Author: Alexandre Kuhn <kuhnam@mail.nih.gov>
-Maintainer: Alexandre Kuhn <kuhnam@mail.nih.gov>
+Author: Alexandre Kuhn <alexandre.m.kuhn@gmail.com>
+Maintainer: Alexandre Kuhn <alexandre.m.kuhn@gmail.com>
 Imports: affy, Biobase, utils
 Description: Helps to easily submit a microarray dataset and the associated sample information to GEO by preparing a single file for upload (direct deposit).
 biocViews: Microarray
