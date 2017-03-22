@@ -1,6 +1,6 @@
 Package: GEOsubmission
-Version: 1.26.0
-Date: 2010-04-19
+Version: 1.26.1
+Date: 2017-03-22
 Title: Prepares microarray data for submission to GEO   
 Author: Alexandre Kuhn <alexandre.m.kuhn@gmail.com>
 Maintainer: Alexandre Kuhn <alexandre.m.kuhn@gmail.com>

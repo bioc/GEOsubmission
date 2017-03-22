@@ -69,7 +69,7 @@ RMA-normalized) and written to the SOFT file.
 See the example below or the vignette for the format of sampleinfo,
 seriesinfo and expressionmatrix. 
 }
-\author{Alexandre Kuhn, kuhnam@mail.nih.gov}
+\author{Alexandre Kuhn, alexandre.m.kuhn@gmail.com}
 \note{The SOFT file format is defined at
   http://www.ncbi.nlm.nih.gov/geo/info/soft2.html}
 

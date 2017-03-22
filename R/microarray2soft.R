@@ -91,7 +91,7 @@ microarray2soft<-function(samplenames,sampleinfo,seriesnames,seriesinfo,datadir=
 		drmacolnames<-sapply(celnames,function(x){if (!is.na(charmatch(substr(x,1,1),0:9))) paste('X',x,sep='') else x}) #NB: CEL file name '12..CEL' and 'X12..CEL' are thus considered to match the same sample!
 		if (!setequal(drmacolnames,colnames(drma))) stop('Column names in expression matrix do not match the names of raw microarray data files given in sampleinfo file.\n') 
 		if (sum(drmacolnames==colnames(drma))!=nbsamples) {
-			drma<-drma[match(drmacolnames,colnames(drma)),]
+			drma<-drma[,match(drmacolnames,colnames(drma))]
 			if (verbose) message('Column order in expression matrix was different than sample order specified in input. Expression matrix was reordered.\n')
 		}	
 	}
