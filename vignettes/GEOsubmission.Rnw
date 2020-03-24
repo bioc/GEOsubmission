@@ -4,6 +4,8 @@
 
 \documentclass[a4paper]{article}
 
+\usepackage[utf8]{inputenc}
+
 \newcommand{\Rfunction}[1]{{\texttt{#1}}}
 \newcommand{\Robject}[1]{{\texttt{#1}}}
 \newcommand{\Rpackage}[1]{{\textit{#1}}}
