@@ -11,7 +11,7 @@
 \newcommand{\Rpackage}[1]{{\textit{#1}}}
 
 \title{GEOsubmission}
-\author{Alexandre Kuhn (\textit{kuhnam@mail.nih.gov})}
+\author{Alexandre Kuhn (\textit{alexandre.m.kuhn@gmail.com})}
 
 \usepackage{hyperref}
 \usepackage{Sweave}
